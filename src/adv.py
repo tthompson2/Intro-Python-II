@@ -1,46 +1,46 @@
 import sys
 from room import Room
 from player import Player
-from player import player_info
-from items import items
+# from player import player_info
+# from items import items
 
 # Declare all the rooms
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons", items.),
+                     "North of you, the cave mount beckons", []),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east.""", items[item_2]),
+passages run north and east.""", []),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm.""", items[item_3]),
+the distance, but there is no way across the chasm.""", []),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air.""", items[item_4]),
+to north. The smell of gold permeates the air.""", [] ),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south.""", items[item_5]),
+earlier adventurers. The only exit is to the south.""", []),
 
    'hall': Room("A hallway", """Dim light filters in from the south. Dusty
-passages run north and east.""", items[item_6]),
+passages run north and east.""", []),
 
    'study': Room("A study", """Dim light filters in from the south. Dusty
-passages run north and east.""", items[item_7]),
+passages run north and east.""", []),
 
    'stairs': Room("Some stairs, don't fall", """Dim light filters in from the south. Dusty
-passages run north and east.""", items[item_8]),
+passages run north and east.""", []),
 
    'kitchen': Room("A kitchen", """Dim light filters in from the south. Dusty
-passages run north and east.""", items[item_9]),
+passages run north and east.""", []),
 
    'bathroom': Room("A bathroom", """Dim light filters in from the south. Dusty
-passages run north and east.""", items[item_10]),
+passages run north and east.""",[]),
 
    'bedroom': Room("A bedroom", """Dim light filters in from the south. Dusty
-passages run north and east.""", items[item_11]),
+passages run north and east.""",[]),
 
 
 }
@@ -80,7 +80,9 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 
-Player("outside", player_info)
+print("What is your name? ")
+name = input()
+player = Player(name, room['outside'])
 
 # Write a loop that:
 #
@@ -97,23 +99,33 @@ trapped = True
 
 while trapped:
 
+    current_room = player.current_room
+
     movement = input("Enter n, s, w, e, or q to quit:")
 
     print(movement)
     
     def switch(movement) :
         if movement == 'n' or movement=='N':
-            Room.n_to()
+            print("You've stumbled into: " player.current_room)
+            player.current_room = player.current_room.n_to
+            print("You've moved North to: "player.current_room)
         elif movement =='s' or movement=='S':
-            Room.s_to()
+            print("You've stumbled into: " player.current_room)
+            player.current_room = player.current_room.s_to
+            print("You've moved South to: "player.current_room)
         elif movement == 'w' or movement=='W':
-            Room.w_to()
+            print("You've stumbled into: " player.current_room)
+            player.current_room = player.current_room.w_to
+            print("You've moved West to: "player.current_room)
         elif movement == 'e' or movement=='E':
-            Room.e_to()
+            print("You've stumbled into: " player.current_room)
+            player.current_room = player.current_room.e_to
+            print("You've moved East to: "player.current_room)
         elif movement == 'q' or movement=='Q':
             trapped = False
             sys.exit()
         else:
-            print("Please be sure to enter n, s, e, w, or q")
+            print("Incorrect direction inserted! Please be sure to enter n, s, e, w, or q below to proceed")
 
     switch(movement)
